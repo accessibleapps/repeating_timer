@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-__version__ = 0.1
+__version__ = 0.11
 __doc__ = """Simple module with a Repeating Timer class for scheduling something to happen over and over again."""
 __author__ = "Christopher Toth"
 
