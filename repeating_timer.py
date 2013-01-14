@@ -17,6 +17,7 @@ class RepeatingTimer(threading.Thread):
   self.args = args
   self.kwargs = kwargs
   self.finished = threading.Event()
+  self.running = False
 
 
  def cancel(self):
@@ -25,10 +26,13 @@ class RepeatingTimer(threading.Thread):
  stop = cancel
 
  def run(self):
+  self.running = True
   while not self.finished.is_set():
    self.finished.wait(self.interval)
-   if not self.finished.is_set():  #In case someone has canceled while waiting
-    try:
-     self.function(*self.args, **self.kwargs)
-    except:
-     pass
+   if self.finished.is_set():  #In case someone has canceled while waiting
+    self.running = False
+    return
+   try:
+    self.function(*self.args, **self.kwargs)
+   except:
+    pass
