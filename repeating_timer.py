@@ -4,7 +4,7 @@ class RepeatingTimer(threading.Thread):
  """Call a function after a specified number of seconds, it will then repeat again after the specified number of seconds
     Note: If the function provided takes time to execute, this time is NOT taken from the next wait period
 
- t = RepeatingTimer(30.0, f, args=[], kwargs={})
+ t = RepeatingTimer(30.0, f, *args, **kwargs)
  t.start()
  t.cancel() # stop the timer's actions
  """
