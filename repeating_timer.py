@@ -1,3 +1,6 @@
+from logging import getLogger
+logger = getLogger("repeating_timer")
+
 import threading
 
 class RepeatingTimer(threading.Thread):
@@ -26,13 +29,15 @@ class RepeatingTimer(threading.Thread):
  stop = cancel
 
  def run(self):
+  logger.debug("Starting timer %r which will run every %r seconds", self.ident, self.interval)
   self.running = True
   while not self.finished.is_set():
    self.finished.wait(self.interval)
    if self.finished.is_set():  #In case someone has canceled while waiting
     self.running = False
-    return
+    break
    try:
     self.function(*self.args, **self.kwargs)
    except:
-    pass
+    logger.exception("Error calling function %r with args %r and kwargs %r", self.function, args, kwargs)
+ logger.debug("Timer %r terminated", self.ident)
