@@ -39,5 +39,5 @@ class RepeatingTimer(threading.Thread):
    try:
     self.function(*self.args, **self.kwargs)
    except:
-    logger.exception("Error calling function %r with args %r and kwargs %r", self.function, args, kwargs)
+    logger.exception("Error calling function %r with args %r and kwargs %r", self.function, self.args, self.kwargs)
   logger.debug("Timer %r terminated", self.ident)
